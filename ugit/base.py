@@ -37,6 +37,7 @@ def write_tree(directory='.'):
   return data.hash_object(tree.encode(), 'tree')
 
 def is_ignored(path):
-  return '.ugit' in path.split('/')
+  parts = path.split('/')
+  return any(p in ['.ugit', '.git', '.venv', '__pycache__'] for p in parts)
 
   #TODO actually create the tree object
