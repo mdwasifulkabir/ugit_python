@@ -60,6 +60,12 @@ def get_tree(oid, base_path=''):
     else:
       assert False, f'Unknown tree entry {type_}'
     return result
+
+def read_tree(tree_oid):
+  for path, oid in get_tree(tree_oid, base_path='./').items():
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    with open(path, 'wb') as f:
+      f.write(data.get_object(oid))
     
 
 def is_ignored(path):
