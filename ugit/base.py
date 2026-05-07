@@ -85,6 +85,14 @@ def read_tree(tree_oid):
     with open(path, 'wb') as f:
       f.write(data.get_object(oid))
     
+#A commit will just be a text object stored in the object database
+#A commit is a type of 'commit'
+def commit(message):
+  commit = f'tree {write_tree()}\n'
+  commit += '\n'
+  commit += f'{message}\n'
+
+  return data.hash_object(commit.encode(), 'commit')
 
 def is_ignored(path):
   parts = path.split('/')
