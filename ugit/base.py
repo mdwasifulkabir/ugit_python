@@ -30,8 +30,6 @@ def write_tree(directory='.'):
       else:
         continue
 
-      if not entry.is_file() and not entry.is_dir():
-        print("error")
       entries.append((entry.name, oid, type_))
 
   #generate oid for tree by appending the names of all entries in the file
@@ -107,6 +105,12 @@ def commit(message):
 
   return oid
 
+def checkout(oid):
+  commit = get_commit(oid)
+  read_tree(commit.tree)
+  data.set_HEAD(oid)
+  
+
 Commit = namedtuple('Commit', ['tree', 'parent', 'message'])
 
 def get_commit(oid):
@@ -129,5 +133,3 @@ def get_commit(oid):
 def is_ignored(path):
   parts = path.split('/')
   return any(p in ['.ugit', '.git', '.venv', '__pycache__'] for p in parts)
-
-  #TODO actually create the tree object
