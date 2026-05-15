@@ -107,7 +107,7 @@ def commit(message):
 
   return oid
 
-Commit = namedtuple('Commit', ['tree', 'parent'])
+Commit = namedtuple('Commit', ['tree', 'parent', 'message'])
 
 def get_commit(oid):
   parent = None
