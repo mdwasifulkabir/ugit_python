@@ -121,7 +121,7 @@ def get_commit(oid):
   commit = data.get_object(oid, 'commit').decode()
   lines = iter(commit.splitlines())
   for line in itertools.takewhile(operator.truth, lines):
-    key, value = line.split('', 1)
+    key, value = line.split(' ', 1)
     if key == 'tree':
       tree = value
     elif key == 'parent':
@@ -131,6 +131,9 @@ def get_commit(oid):
 
   message = '\n'.join(lines)
   return Commit(tree=tree, parent=parent, message=message)
+
+def get_oid(name):
+  return data.get_ref(name) or name
 
 def is_ignored(path):
   parts = path.split('/')

@@ -15,7 +15,7 @@ def update_ref(ref, oid):
 
 def get_ref(ref):
   ref_path = f'{GIT_DIR}/{ref}'
-  if os.path.isFile(ref_path):
+  if os.path.isfile(ref_path):
     with open(ref_path) as f:
       return f.read().strip()
 
@@ -31,7 +31,7 @@ def get_object(oid, expected='blob'):
     obj = f.read()
 
   type_, _, content = obj.partition(b'\x00')
-  type_ = type.decode()
+  type_ = type_.decode()
 
   if expected is not None:
     assert type_ == expected, f'Expected {expected}, got {type_}'
