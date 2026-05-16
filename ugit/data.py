@@ -14,8 +14,9 @@ def update_ref(ref, oid):
     f.write(oid)
 
 def get_ref(ref):
-  if os.path.isFile(f'{GIT_DIR}/{ref}'):
-    with open(f'{GIT_DIR}/{ref}') as f:
+  ref_path = f'{GIT_DIR}/{ref}'
+  if os.path.isFile(ref_path):
+    with open(ref_path) as f:
       return f.read().strip()
 
 def hash_object(data, type_='blob'):
