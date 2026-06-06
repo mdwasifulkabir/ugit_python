@@ -133,6 +133,19 @@ def get_commit(oid):
   message = '\n'.join(lines)
   return Commit(tree=tree, parent=parent, message=message)
 
+def iter_commits_and_parents(oids):
+  oids = set(oids)
+  visited = set()
+
+  while oids:
+    oid = oids.pop()
+    if not oid or oid in visited:
+      continue
+    visited.add(oid)
+    yield oid
+
+    commit = get_commit(oid)
+
 def get_oid(name):
   if name == '@': name = 'HEAD'
 
@@ -141,12 +154,12 @@ def get_oid(name):
     f'{name}',
     f'refs/{name}',
     f'refs/tags/{name}',
-    f'refs/tags/heads/{name}'
+    f'refs/heads/{name}'
   ]
 
   for ref in refs_to_try:
     if data.get_ref(ref):
-      return data.get_ref
+      return data.get_ref()
   
   #If name is SHA1
   is_hex = all(c in string.hexdigits for c in name)
